@@ -4,6 +4,6 @@
 
 * [Production Deployment](https://project-4-production.herokuapp.com/)
 
-[![Development Workflow](https://github.com/tnvrravish/project_4/actions/workflows/prod.yml/badge.svg)](https://github.com/tnvrravish/project_4/actions/workflows/prod.yml)
+[![Development Workflow](https://github.com/tnvrravish/project_4/actions/workflows/dev.yml/badge.svg)](https://github.com/tnvrravish/project_4/actions/workflows/dev.yml)
 
-* [prod Deployment](https://project-4-development.herokuapp.com/)
+* [Development Deployment](https://project-4-development.herokuapp.com/)
