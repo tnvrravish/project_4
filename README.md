@@ -6,4 +6,4 @@
 
 [![Development Workflow](https://github.com/tnvrravish/project_4/actions/workflows/prod.yml/badge.svg)](https://github.com/tnvrravish/project_4/actions/workflows/prod.yml)
 
-* [Development Deployment](https://project-4-development.herokuapp.com/)
+* [prod Deployment](https://project-4-development.herokuapp.com/)
