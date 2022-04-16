@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3> Index Page </h3>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h4>Hello Everyone! </h4> <br>
+                I am Vishnu Sai Thota a graduate student currently pursuing Masters in Data Science at NJIT.
+                Let me guide you through some of the major technologies used in web development.
+
+            </div>
+        </div>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide mb-5" data-bs-ride="carousel" data-interval="2000">
+        <div class="carousel-inner" style="height:50%">
+            <div class="carousel-item active">
+                <a href="/docker">
+                    <img src="https://logos-world.net/wp-content/uploads/2021/02/Docker-Symbol.png"
+                         class="d-block w-100 " alt="...">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/flask">
+                    <img src="https://miro.medium.com/max/640/1*XzIRJGujfqAiOV2EIQgR_Q.png"
+                         class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a href="/solid">
+                    <img src="https://www.innofied.com/wp-content/uploads/2018/12/SOLID-React-v1.0-1.jpg"
+                         class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a href="/aaa">
+                    <img src="https://miro.medium.com/max/1200/1*_MiurxVJ3baRaV6s7r4vwA.png"
+                         class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a href="/pylint">
+                    <img src="https://miro.medium.com/max/1200/1*gW_OyzV6SyFJ0v_ybcFLuQ.png"
+                         class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a href="/oop">
+                    <img src="https://image.shutterstock.com/image-vector/oop-arrows-concept-vector-illustration-260nw-409775206.jpg"
+                         class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a href="/git">
+                    <img src="https://miro.medium.com/max/1400/1*mtsk3fQ_BRemFidhkel3dA.png"
+                         class="d-block w-100 img-fluid"
+                         alt="...">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/cicd">
+                    <img src="https://miro.medium.com/max/850/0*OKF6DYlU2GPisuSJ.jpg" class="d-block w-100  img-fluid"
+                         alt="...">
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="card" style="width: 16rem;">
+                <img src="https://logos-world.net/wp-content/uploads/2021/02/Docker-Symbol.png" class="card-img-top"
+                     alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Docker</h5>
+                    <p class="card-text">Docker is a containerization platform that is free and open source.</p>
+                    <a href="/docker" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            <div class="card" style="width: 16rem;">
+                <img src="https://miro.medium.com/max/640/1*XzIRJGujfqAiOV2EIQgR_Q.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Python-Flask</h5>
+                    <p class="card-text">Flask is a web framework and a Python module that makes it simple to create web
+                        applications.</p>
+                    <a href="/flask" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            <div class="card" style="width: 16rem;">
+                <img src="https://miro.medium.com/max/1400/1*mtsk3fQ_BRemFidhkel3dA.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Git/GitHub</h5>
+                    <p class="card-text">Git is a distributed version control system that allows multiple people to work
+                        on the same project.</p>
+                    <a href="/git" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            <div class="card" style="width: 16rem;">
+                <img src="https://miro.medium.com/max/850/0*OKF6DYlU2GPisuSJ.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">CI/CD</h5>
+                    <p class="card-text">CI/CD is a means of delivering apps to clients more frequently by incorporating
+                        automation into the app development process.</p>
+                    <a href="/cicd" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

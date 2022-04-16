@@ -1,3 +1,25 @@
 body {
-font-size: 200%;
+font-size: 100%;
+}
+
+#carouselExampleSlidesOnly {
+    height: auto;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    outline: black;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-size: 100%, 100%;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+#imggg{
+    height: 250px
+}
+#sidebar {
+}
+
+.carousel-inner .carousel-item img{
+    height: auto;
 }
