@@ -15,6 +15,11 @@ from app.db.models import User
 from app.logging_config import log_con
 from app.simple_pages import simple_pages
 
+from app.auth import auth
+from app.auth.user_operation import user_operations
+from app.auth import auth
+from app.exceptions import http_exceptions
+
 login_manager = flask_login.LoginManager()
 
 
@@ -38,6 +43,8 @@ def create_app():
     bootstrap = Bootstrap5(app)
     # these load functions with web interface
     app.register_blueprint(simple_pages)
+    app.register_blueprint(auth)
+    app.register_blueprint(user_operations)
     app.register_blueprint(log_con)
 
     # these load functionality without a web interface
