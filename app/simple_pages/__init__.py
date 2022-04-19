@@ -12,9 +12,31 @@ def index():
     except TemplateNotFound:
         abort(404)
 
+@simple_pages.route('/about')
+def about():
+    try:
+        return render_template('about.html')
+    except TemplateNotFound:
+        abort(404)
+
+@simple_pages.route('/home')
+def home():
+    try:
+        return render_template('home.html')
+    except TemplateNotFound:
+        abort(404)
+
+
 @simple_pages.route('/git')
 def git():
     try:
         return render_template('git.html')
+    except TemplateNotFound:
+        abort(404)
+
+@simple_pages.route('/welcome')
+def welcome():
+    try:
+        return render_template('welcome.html')
     except TemplateNotFound:
         abort(404)
