@@ -9,12 +9,14 @@
         {% if current_user.is_authenticated == false %}
             <aside class="col-4">
                 <h2>Login</h2>
-                <form action="{{ url_for('auth.login') }}" method=post>
-                    <dl>
-
-                    </dl>
-                    <p><input type=submit value=Login>
-                </form>
+{#                <form action="{{ url_for('auth.login') }}" method=post>#}
+{#                    <dl>#}
+{#                        {{ form.csrf_token }}#}
+{#                        {{ render_field(form.email) }}#}
+{#                        {{ render_field(form.password) }}#}
+{#                    </dl>#}
+{#                    <p><input type=submit value=Login>#}
+{#                </form>#}
             </aside>
         {% endif %}
 
