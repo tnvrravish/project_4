@@ -16,3 +16,13 @@ def test_database_file():
     database = os.path.join(root, '../database/db.sqlite')
     assert os.path.exists(database) == True
 
+def test_myinfo_log_file():
+    root = os.path.dirname(os.path.abspath(__file__))
+    database = os.path.join(root, '../app/logs/myinfo.log')
+    assert os.path.exists(database) == True
+
+def test_mydebug_log_file():
+    root = os.path.dirname(os.path.abspath(__file__))
+    database = os.path.join(root, '../app/logs/mydebug.log')
+    assert os.path.exists(database) == True
+
