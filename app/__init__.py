@@ -13,6 +13,7 @@ from app.context_processors import utility_text_processors
 from app.db import db
 from app.db.models import User
 from app.logging_config import log_con
+from app.exceptions import http_exceptions
 from app.simple_pages import simple_pages
 
 from app.auth import auth
