@@ -1,29 +1,34 @@
+"""This test the homepage"""
 
-def test_request_home_page(application,client):
+def test_request_main_menu_links(client):
     """This makes the index page"""
-    response = client.get("/home")
+    response = client.get("/")
     assert response.status_code == 200
-    assert b'Home' in response.data
-    assert b'Git/GitHub' in response.data
+    assert b'href="/about"' in response.data
+    assert b'href="/welcome"' in response.data
+    assert b'href="/login"' in response.data
+    assert b'href="/register"' in response.data
 
-def test_request_git_page(application,client):
-    """This makes the Git page"""
-    response = client.get("/git")
+
+def test_request_index(client):
+    """This makes the index page"""
+    response = client.get("/")
     assert response.status_code == 200
-    assert b'Home' in response.data
-    assert b'Git/GitHub' in response.data
+    assert b"Index" in response.data
 
-def test_request_welcome_page(client):
-    response = client.get("/welcome")
-    assert response.status_code == 200
-    assert b'Welcome' in response.data
-
-def test_request_about_page(client):
+def test_request_about(client):
+    """This makes the index page"""
     response = client.get("/about")
     assert response.status_code == 200
-    assert b'About' in response.data
+    assert b"About" in response.data
 
-def test_page_not_found(client):
-    """This Tests Page Not Fount"""
-    response = client.get('/page1')
+def test_request_page1(client):
+    """This makes the index page"""
+    response = client.get("/welcome")
+    assert response.status_code == 200
+    assert b"welcome" in response.data
+
+def test_request_page_not_found(client):
+    """This makes the index page"""
+    response = client.get("/page5")
     assert response.status_code == 404
