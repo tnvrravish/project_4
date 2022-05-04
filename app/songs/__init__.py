@@ -22,7 +22,7 @@ def songs_browse(page):
     pagination = Song.query.paginate(page, per_page, error_out=False)
     data = pagination.items
     try:
-        return render_template('browse_transactions.html',data=data,pagination=pagination)
+        return render_template('browse_songs.html',data=data,pagination=pagination)
     except TemplateNotFound:
         abort(404)
 
