@@ -23,6 +23,22 @@ class Song(db.Model,SerializerMixin):
         self.genre = genre
         self.year = year
 
+class Transaction(db.Model,SerializerMixin):
+    __tablename__ = 'transactions'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), nullable=True, unique=False)
+    artist = db.Column(db.String(300), nullable=True, unique=False)
+    genre = db.Column(db.String(300), nullable=True, unique=False)
+    year = db.Column(db.Integer, nullable=True, unique=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = relationship("User", back_populates="transactions", uselist=False)
+
+    def __init__(self, title, artist, genre, year):
+        self.title = title
+        self.artist = artist
+        self.genre = genre
+        self.year = year
+
 class Location(db.Model, SerializerMixin):
     __tablename__ = 'locations'
     serialize_only = ('title', 'longitude', 'latitude')
@@ -63,6 +79,8 @@ class User(UserMixin, db.Model):
     is_admin = db.Column('is_admin', db.Boolean(), nullable=False, server_default='0')
     songs = db.relationship("Song", back_populates="user", cascade="all, delete")
     locations = db.relationship("Location", back_populates="user", cascade="all, delete")
+    transactions = db.relationship("Transaction", back_populates="user", cascade="all, delete")
+
 
     # `roles` and `groups` are reserved words that *must* be defined
     # on the `User` model to use group- or role-based authorization.
