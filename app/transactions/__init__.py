@@ -22,8 +22,13 @@ def transactions_browse(page):
     per_page = 1000
     pagination = Transaction.query.paginate(page, per_page, error_out=False)
     data = pagination.items
+    ball = 0
+    if current_user.balance is None:
+        ball = 0
+    else :
+        ball = current_user.balance
     try:
-        return render_template('browse_transactions.html', data=data, pagination=pagination)
+        return render_template('browse_transactions.html', data=data, pagination=pagination, ball=ball)
     except TemplateNotFound:
         abort(404)
 
@@ -38,7 +43,10 @@ def transactions_upload():
         filename = secure_filename(form.file.data.filename)
         filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         form.file.data.save(filepath)
-        bal = current_user.inital_balance
+        if current_user.balance is None:
+            bal = current_user.inital_balance
+        else:
+            bal = current_user.balance
         log.info(bal)
         # user = current_user
         list_of_transactions = []
@@ -52,7 +60,7 @@ def transactions_upload():
 
         current_user.transactions = list_of_transactions
         current_user.set_balance(bal)
-        current_user.set_inital_balance = bal
+        current_user.inital_balance = bal
         db.session.commit()
         log.info(f"CSV file uploaded by {current_user}")
 
