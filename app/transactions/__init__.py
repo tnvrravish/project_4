@@ -38,15 +38,21 @@ def transactions_upload():
         filename = secure_filename(form.file.data.filename)
         filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         form.file.data.save(filepath)
+        bal = current_user.inital_balance
+        log.info(bal)
         # user = current_user
         list_of_transactions = []
         with open(filepath) as file:
             csv_file = csv.DictReader(file)
             csv_file = csv.DictReader(file)
             for row in csv_file:
-                list_of_transactions.append(Transaction(row['TYPE']))
+                list_of_transactions.append(Transaction(row['AMOUNT'], row['TYPE']))
+                log.info(bal)
+                bal = bal + int(row['AMOUNT'])
 
         current_user.transactions = list_of_transactions
+        current_user.set_balance(bal)
+        current_user.set_inital_balance = bal
         db.session.commit()
         log.info(f"CSV file uploaded by {current_user}")
 

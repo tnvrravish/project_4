@@ -7,7 +7,8 @@ from app.db import db
 from flask_login import UserMixin
 from sqlalchemy_serializer import SerializerMixin
 
-class Song(db.Model,SerializerMixin):
+
+class Song(db.Model, SerializerMixin):
     __tablename__ = 'songs'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=True, unique=False)
@@ -23,23 +24,31 @@ class Song(db.Model,SerializerMixin):
         self.genre = genre
         self.year = year
 
-class Transaction(db.Model,SerializerMixin):
+
+class Transaction(db.Model, SerializerMixin):
     __tablename__ = 'transactions'
+    serialize_only = ('amount', 'type')
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=True, unique=False)
     type = db.Column(db.String(300), nullable=True, unique=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User", back_populates="transactions", uselist=False)
 
-    def __init__(self, type):
-        # self.amount = amount
+    def __init__(self, amount,type):
+        self.amount = amount
         self.type = type
+
+
+    def serialize(self):
+        return {
+            'amount': self.amount,
+            'type': self.type,
+        }
 
 
 class Location(db.Model, SerializerMixin):
     __tablename__ = 'locations'
     serialize_only = ('title', 'longitude', 'latitude')
-
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=True, unique=False)
@@ -77,6 +86,8 @@ class User(UserMixin, db.Model):
     songs = db.relationship("Song", back_populates="user", cascade="all, delete")
     locations = db.relationship("Location", back_populates="user", cascade="all, delete")
     transactions = db.relationship("Transaction", back_populates="user", cascade="all, delete")
+    balance = db.Column(db.Integer, nullable=True)
+    inital_balance = 0
 
 
     # `roles` and `groups` are reserved words that *must* be defined
@@ -93,6 +104,12 @@ class User(UserMixin, db.Model):
     def is_active(self):
         return True
 
+    def set_balance(self, balance):
+        self.balance = balance
+
+    def set_inital_balance(self, inital_balance):
+        self.inital_balance = inital_balance
+
     def is_anonymous(self):
         return False
 
@@ -107,5 +124,3 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.email
-
-
