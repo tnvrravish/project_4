@@ -50,10 +50,11 @@ def transactions_upload():
         log.info(bal)
         # user = current_user
         list_of_transactions = []
-        with open(filepath) as file:
+        with open(filepath, encoding='utf-8-sig') as file:
             csv_file = csv.DictReader(file)
             csv_file = csv.DictReader(file)
             for row in csv_file:
+                amount = int(row['AMOUNT'])
                 list_of_transactions.append(Transaction(row['AMOUNT'], row['TYPE']))
                 log.info(bal)
                 bal = bal + int(row['AMOUNT'])
