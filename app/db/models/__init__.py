@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import db
 from flask_login import UserMixin
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.sql import functions
 
 
 class Song(db.Model, SerializerMixin):
@@ -109,6 +110,12 @@ class User(UserMixin, db.Model):
 
     def set_inital_balance(self, inital_balance):
         self.inital_balance = inital_balance
+
+    def get_balance(self):
+        if self.balance is None:
+            return 0
+        else :
+            return db.session.query(functions.sum(Transaction.amount)).scalar()
 
     def is_anonymous(self):
         return False

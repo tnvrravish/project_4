@@ -2,6 +2,7 @@
 # pylint: disable=redefined-outer-name
 import logging
 import os
+from sqlalchemy.sql import functions
 
 import pytest
 from app import create_app, User
@@ -48,3 +49,5 @@ def client(application):
 def runner(application):
     """This makes the task runner"""
     return application.test_cli_runner()
+
+

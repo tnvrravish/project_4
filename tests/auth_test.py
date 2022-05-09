@@ -55,7 +55,12 @@ def test_dashboard_access(client):
     assert res.status_code == 302
 
 
-def test_authenticated_user(client):
+def test_authenticated_user(client,application, add_user):
     """Test user authentication"""
-    user = User("vt7@njit.edu", "testtest")
-    assert user.is_authenticated() == True
+    with application.app_context():
+        user = User("vt7@njit.edu", "testtest")
+        db.session.add(user)
+        assert user.is_authenticated() == True
+        res = client.post('/login', data=dict(email="vt7@njit.edu", password='testtest'), follow_redirects=True)
+        assert user.is_active() == True
+
