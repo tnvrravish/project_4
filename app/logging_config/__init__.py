@@ -1,65 +1,19 @@
 import logging
-from logging.config import dictConfig
-
-import flask
-from flask import request, current_app, blueprints
-
-from app.logging_config.log_formatters import RequestFormatter
-
-log_con = flask.Blueprint('log_con', __name__)
-
-
-@log_con.before_app_request
-def before_request_logging():
-    current_app.logger.info("Before Request")
-    log = logging.getLogger("myApp")
-    log.info("My App Logger")
-
-
-@log_con.after_app_request
-def after_request_logging(response):
-    if request.path == '/favicon.ico':
-        return response
-    elif request.path.startswith('/static'):
-        return response
-    elif request.path.startswith('/bootstrap'):
-        return response
-    current_app.logger.info("After Request")
-
-    log = logging.getLogger("myApp")
-    log.info("INFO LOGGER")
-    log = logging.getLogger("mydebug")
-    log.debug("DEBUG LOG")
-    return response
-
-
-@log_con.before_app_first_request
-def configure_logging():
-    logging.config.dictConfig(LOGGING_CONFIG)
-    log = logging.getLogger("myApp")
-    log.info("INFO LOGGER")
-    log = logging.getLogger("myDebug")
-    log.debug("DEBUG LOG")
-
-
-import logging
+import os
 from logging.config import dictConfig
 
 import flask
 from flask import request, current_app
 
-from app.logging_config.log_formatters import RequestFormatter
-
+# from app.logging_config.log_formatters import RequestFormatter
+from app import config
 log_con = flask.Blueprint('log_con', __name__)
 
 
 @log_con.before_app_request
 def before_request_logging():
-    current_app.logger.info("Before Request")
     log = logging.getLogger("myApp")
-    log.info("My App Logger")
-    log = logging.getLogger("myDebug")
-    log.debug("My Debug Logger Message")
+    log.info("REQUEST")
 
 
 @log_con.after_app_request
@@ -70,22 +24,20 @@ def after_request_logging(response):
         return response
     elif request.path.startswith('/bootstrap'):
         return response
-    current_app.logger.info("After Request")
 
     log = logging.getLogger("myApp")
-    log.info("My App Logger")
-    log = logging.getLogger("myDebug")
-    log.debug("My Debug Logger Message")
+    log.info("RESPONSE")
     return response
 
 
 @log_con.before_app_first_request
-def configure_logging():
+def setup_logs():
+    # set the name of the apps log folder to logs
+    logdir = config.Config.LOG_DIR
+    # make a directory if it doesn't exist
+    if not os.path.exists(logdir):
+        os.mkdir(logdir)
     logging.config.dictConfig(LOGGING_CONFIG)
-    log = logging.getLogger("myApp")
-    log.info("My App Logger")
-    log = logging.getLogger("mydebug")
-    log.debug("My Debug Logger Message")
 
 
 LOGGING_CONFIG = {
@@ -95,15 +47,13 @@ LOGGING_CONFIG = {
         'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         },
-        'RequestFormatter': {
-            '()': 'app.logging_config.log_formatters.RequestFormatter',
-            'format': '[%(asctime)s] [%(process)d] %(remote_addr)s requested %(url)s '
-                      '%(levelname)s in %(module)s: %(message)s'
+        'csv': {
+            'format': '%(asctime)s : %(message)s'
         },
-        'DebugFormatter': {
-            '()': 'app.logging_config.log_formatters.RequestFormatter',
-            'format': '%(levelname)s : %(message)s'
-        }
+        'req': {
+            'format': '%(asctime)s : %(message)s'
+        },
+
     },
     'handlers': {
         'default': {
@@ -112,29 +62,36 @@ LOGGING_CONFIG = {
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',  # Default is stderr
         },
-        'file.handler.myapp': {
+        'file.handler': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'RequestFormatter',
-            'filename': 'app/logs/myinfo.log',
+            'formatter': 'standard',
+            'filename': os.path.join(config.Config.LOG_DIR, 'handler.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
-        'file.handler.mydebug': {
+        'file.handler.myapp': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'DebugFormatter',
-            'filename': 'app/logs/mydebug.log',
+            'formatter': 'req',
+            'filename': os.path.join(config.Config.LOG_DIR, 'myapp.log'),
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        },
+        'file.handler.csv': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'csv',
+            'filename': os.path.join(config.Config.LOG_DIR, 'csv.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
     },
     'loggers': {
         '': {  # root logger
-            'handlers': ['default'],
+            'handlers': ['default', 'file.handler'],
             'level': 'DEBUG',
             'propagate': True
         },
         '__main__': {  # if __name__ == '__main__'
-            'handlers': ['default'],
+            'handlers': ['default', 'file.handler'],
             'level': 'DEBUG',
             'propagate': True
         },
@@ -143,9 +100,9 @@ LOGGING_CONFIG = {
             'level': 'INFO',
             'propagate': False
         },
-        'myDebug': {  # if __name__ == '__main__'
-            'handlers': ['file.handler.mydebug'],
-            'level': 'DEBUG',
+        'mycsv': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.csv'],
+            'level': 'INFO',
             'propagate': False
         },
 

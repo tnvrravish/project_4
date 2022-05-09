@@ -12,6 +12,8 @@
         {% endblock %}
 
         <title>My Site - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
     {% endblock %}
 </head>
 <body>
@@ -31,15 +33,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <div class="navbar-nav mr-auto">
-
                         {% if current_user.is_authenticated %}
                             {{ render_nav_item('auth.dashboard','Dashboard' ) }}
-                            {% if current_user.is_admin %}
-                                {{ render_nav_item('user_operations.browse_users','User Management' ) }}
-                            {% endif %}
-
                         {% else %}
                             {{ render_nav_item('simple_pages.index', 'Home') }}
+
                         {% endif %}
 
                         {{ render_nav_item('simple_pages.about','About') }}
@@ -47,16 +45,6 @@
                     </div>
                 </div>
                 <div class="navbar-nav d-flex">
-                    <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Simple Pages
-                            </a>
-                            <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ url_for("simple_pages.home") }}">Home</a></li>
-                                <li><a class="dropdown-item" href="{{ url_for("simple_pages.git") }}">Git/GitHub</a></li>
-                            </ul>
-                        </li>
                     {% if current_user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
@@ -68,6 +56,15 @@
                                     Profile</a></li>
                                 <li><a class="dropdown-item" href="{{ url_for("auth.edit_account") }}">Manage
                                     Account</a></li>
+                                {% if current_user.is_admin %}
+                                    <li><a class="dropdown-item" href="{{ url_for("auth.browse_users") }}">User Mgmt</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ url_for("songs.songs_browse") }}">Song
+                                        Mgmt</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for("transactions.transactions_browse") }}">Transactions
+                                        Mgmt</a></li>
+
+                                {% endif %}
                                 <li><a class="dropdown-item" href="{{ url_for("auth.logout") }}">Logout</a></li>
                             </ul>
                         </li>
@@ -90,9 +87,13 @@
     </div>
 </div>
 
+
+
+
 {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
+
 {% endblock %}
 <footer class="text-center mt-5">
     Environment: {{ deployment_environment }} - Copyright: {{ year }} {{ format_price(100) }}
