@@ -60,8 +60,12 @@ def transactions_upload():
                 bal = bal + int(row['AMOUNT'])
 
         current_user.transactions = list_of_transactions
-        current_user.set_balance(bal)
-        current_user.inital_balance = bal
+        if bal < 0 :
+            current_user.set_balance(0)
+            current_user.inital_balance = 0
+        else :
+            current_user.set_balance(bal)
+            current_user.inital_balance = bal
         db.session.commit()
         log.info(f"CSV file uploaded by {current_user}")
 
