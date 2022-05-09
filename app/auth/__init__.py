@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 from app.auth.decorators import admin_required
 from app.auth.forms import login_form, register_form, profile_form, security_form, user_edit_form
 from app.db import db
-from app.db.models import User
+from app.db.models import User, Transaction
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
@@ -64,11 +64,22 @@ def logout():
 
 
 
-@auth.route('/dashboard')
+@auth.route('/dashboard', methods=['GET'], defaults={"page": 1})
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
-
+def dashboard(page):
+    page = page
+    per_page = 1000
+    ball = 0
+    if current_user.balance is None:
+        ball = 0
+    else:
+        ball = current_user.balance
+    pagination = Transaction.query.paginate(page, per_page, error_out=False)
+    data = pagination.items
+    try:
+        return render_template('dashboard.html', data=data, pagination=pagination, ball= ball)
+    except TemplateNotFound:
+        abort(404)
 
 @auth.route('/profile', methods=['POST', 'GET'])
 def edit_profile():
