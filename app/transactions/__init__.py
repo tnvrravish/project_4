@@ -65,7 +65,7 @@ def transactions_upload():
         db.session.commit()
         log.info(f"CSV file uploaded by {current_user}")
 
-        return redirect(url_for('transactions.transactions_browse'))
+        return redirect(url_for('auth.dashbord'))
 
     try:
         return render_template('upload_transactions.html', form=form)
