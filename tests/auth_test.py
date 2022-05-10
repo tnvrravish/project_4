@@ -1,7 +1,7 @@
 """This test the homepage"""
 from app import db
 import logging
-from app.db.models import User, Song
+from app.db.models import User
 
 
 def test_request_main_menu_links(client):
