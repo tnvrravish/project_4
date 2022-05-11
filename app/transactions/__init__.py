@@ -47,7 +47,7 @@ def transactions_upload():
             bal = current_user.inital_balance
         else:
             bal = current_user.balance
-        log.info(bal)
+        # log.info(bal)
         # user = current_user
         list_of_transactions = []
         with open(filepath, encoding='utf-8-sig') as file:
@@ -56,7 +56,7 @@ def transactions_upload():
             for row in csv_file:
                 amount = int(row['AMOUNT'])
                 list_of_transactions.append(Transaction(row['AMOUNT'], row['TYPE']))
-                log.info(bal)
+                # log.info(bal)
                 bal = bal + int(row['AMOUNT'])
 
         current_user.transactions = list_of_transactions
