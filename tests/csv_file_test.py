@@ -15,3 +15,4 @@ def test_csv_upload(client, add_user, application):
             for row in csv_file:
                 testvar = row
             assert testvar == {'AMOUNT': '2000', 'TYPE': 'CREDIT'}
+
